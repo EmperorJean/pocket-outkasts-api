@@ -13,10 +13,24 @@ let lastFetchTime = null;
 
 const fetchData = async () => {
   try {
+    let temp = {}
+
     const { data } = await sdk.get_collection_stats({
       collection_slug: "wearetheoutkast",
     });
-    cachedData = data;
+
+    var data2 = await sdk.get_collection({
+      collection_slug: "wearetheoutkast",
+    });
+
+    data2 = data2.data;
+    
+    temp = {
+      ...data,
+      ...data2
+    }
+
+    cachedData = temp;
     lastFetchTime = Date.now();
   } catch (error) {
     console.error("Error fetching data:", error);
